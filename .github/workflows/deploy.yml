@@ -4,10 +4,17 @@ on:
     branches:
       - main
       - dev
+env: 
+  MONGODB_DB_NAME: DBcluster
 jobs:
   test:
     environment: testing
     runs-on: ubuntu-latest
+    env:
+      MONGODB_CLUSTER_ADDRESS: cluster0.r6m1l.mongodb.net
+      MONGODB_USERNAME: sharathkumar0498
+      MONGODB_PASSWORD: H6jN6h8OEpjKXpP4
+      PORT: 8080
     steps:
       - name: Get Code
         uses: actions/checkout@v3
@@ -19,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run server
-        run: npm start & npx wait-on http://127.0.0.1:XYZ
+        run: npm start & npx wait-on http://127.0.0.1:$PORT
       - name: Run tests
         run: npm test
       - name: Output information
